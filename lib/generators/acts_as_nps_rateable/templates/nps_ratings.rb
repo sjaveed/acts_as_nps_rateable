@@ -1,4 +1,4 @@
-class NpsRatings < ActiveRecord::Base
+class NpsRating < ActiveRecord::Base
   belongs_to :nps_rateable, polymorphic: true
   belongs_to :user
 
