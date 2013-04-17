@@ -3,7 +3,7 @@
 
 module ActsAsNpsRateable::Hook
   def acts_as_nps_rateable
-    has_many :nps_ratings, class_name: "NpsRating", :as => :nps_rateable, :dependent => :destroy
+    has_many :nps_ratings, :as => :nps_rateable, :dependent => :destroy
 
     include ActsAsNpsRateable::InstanceMethods
   end
