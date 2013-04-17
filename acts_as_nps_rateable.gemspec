@@ -12,6 +12,9 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Net Promoter Score ratings and analysis for ActiveRecord models}
   gem.homepage      = ""
 
+  gem.add_dependency "activerecord", "~> 3.0"
+  gem.add_dependency "rails", "~> 3.0"
+
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
