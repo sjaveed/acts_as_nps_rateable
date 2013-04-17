@@ -10,7 +10,7 @@ module ActsAsNpsRateable
       Time.now.utc.strftime("%Y%m%d%H%M%S")
     end
 
-    def copy_migration_file
+    def create_migration
       migration_template 'migration.rb', 'db/migrate/acts_as_nps_rateable_migration'
     end
   end
