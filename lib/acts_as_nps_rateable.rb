@@ -1,5 +1,7 @@
-require "acts_as_nps_rateable/version"
+require File.join(File.dirname(__FILE__), "acts_as_nps_rateable/railtie")
 
 module ActsAsNpsRateable
-  # Your code goes here...
+  autoload :Hook, File.join(File.dirname(__FILE__), "acts_as_nps_rateable/hook")
+  autoload :InstanceMethods, File.join(File.dirname(__FILE__), "acts_as_nps_rateable/instance_methods")
+  autoload :Rating, File.join(File.dirname(__FILE__), "acts_as_nps_rateable/rating")
 end
