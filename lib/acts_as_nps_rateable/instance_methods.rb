@@ -33,7 +33,7 @@ module ActsAsNpsRateable::InstanceMethods
     nps_ratings.where(score: [7, 8]).size
   end
 
-  def detractors
+  def detracters
     nps_ratings.where('score <= ?', 6).size
   end
 
@@ -41,7 +41,7 @@ module ActsAsNpsRateable::InstanceMethods
     total_ratings = nps_ratings.size
     return 0 if total_ratings == 0
 
-    (promotors - detractors) * 100 / total_ratings
+    (promotors - detracters) * 100 / total_ratings
   end
 
 end
