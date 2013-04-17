@@ -9,6 +9,6 @@ class ActsAsNpsRateableMigration < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :nps_ratings, [:nps_rateable_type, :nps_rateable_id, :user_id], unique: true
+    add_index :nps_ratings, [:nps_rateable_type, :nps_rateable_id, :user_id], unique: true, name: "acts_as_nps_rateable_unique_index"
   end
 end
