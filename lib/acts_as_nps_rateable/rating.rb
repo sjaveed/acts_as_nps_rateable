@@ -1,4 +1,6 @@
 class ActsAsNpsRateable::Rating < ActiveRecord::Base
+  set_table_name :nps_ratings
+
   belongs_to :nps_rateable, polymorphic: true
   belongs_to :user
 
