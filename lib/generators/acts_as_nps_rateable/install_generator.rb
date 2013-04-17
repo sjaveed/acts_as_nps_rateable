@@ -15,7 +15,7 @@ module ActsAsNpsRateable
     end
 
     def install_models
-      template 'nps_ratings.rb', 'app/models/nps_ratings.rb'
+      template 'nps_rating.rb', 'app/models/nps_rating.rb'
     end
   end
 end
