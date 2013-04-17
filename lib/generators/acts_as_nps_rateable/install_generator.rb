@@ -1,7 +1,7 @@
 require 'rails/generators/migration'
 
 module ActsAsNpsRateable
-  class MigrationGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
     source_root File.expand_path('../templates', __FILE__)
@@ -12,6 +12,10 @@ module ActsAsNpsRateable
 
     def create_migration
       migration_template 'migration.rb', 'db/migrate/acts_as_nps_rateable_migration'
+    end
+
+    def install_models
+      template 'nps_ratings.rb', 'app/models/nps_ratings.rb'
     end
   end
 end
