@@ -25,23 +25,39 @@ module ActsAsNpsRateable::InstanceMethods
   # Net Promoter Score Calculations: http://www.checkmarket.com/2011/06/net-promoter-score/
   #
 
-  def promoters
-    nps_ratings.where(score: [9, 10]).size
+  def promoters ratings = nil
+    if ratings.nil?
+      nps_ratings.promoters.size
+    else
+      ratings.promoters.size
+    end
   end
 
-  def passives
-    nps_ratings.where(score: [7, 8]).size
+  def passives ratings = nil
+    if ratings.nil?
+      nps_ratings.passives.size
+    else
+      ratings.passives.size
+    end
   end
 
-  def detractors
-    nps_ratings.where('score <= ?', 6).size
+  def detractors ratings = nil
+    if ratings.nil?
+      nps_ratings.detractors.size
+    else
+      ratings.detractors.size
+    end
   end
 
-  def net_promoter_score
-    total_ratings = nps_ratings.size
+  def net_promoter_score ratings = nil
+    total_ratings = ratings.nil? ? nps_ratings.size : ratings.size
     return 0 if total_ratings == 0
 
-    (promoters - detractors) * 100 / total_ratings
+    if ratings.nil?
+      (promoters - detractors) * 100 / total_ratings
+    else
+      (promoters(ratings) - detractors(ratings)) * 100 / total_ratings
+    end
   end
 
 end
