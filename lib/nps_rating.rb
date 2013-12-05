@@ -18,7 +18,7 @@ module ActsAsNpsRateable
     scope :promoters, where(score: [9, 10])
     scope :passives, where(score: [7, 8])
     scope :detractors, where('score <= 6')
-    scope :with_comments, where('comments != null')
+    scope :with_comments, where('comments IS NOT NULL')
 
     def self.calculate_for relevant_ratings
       total_ratings = relevant_ratings.size
