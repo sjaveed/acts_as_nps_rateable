@@ -15,6 +15,8 @@ module ActsAsNpsRateable
     validates_presence_of :user_id
     validates_uniqueness_of :user_id, scope: [:nps_rateable_type, :nps_rateable_id], message: 'has already rated'
 
+    before_save :remove_blank_comments
+
     scope :promoters, where(score: [9, 10])
     scope :passives, where(score: [7, 8])
     scope :detractors, where('score <= 6')
@@ -28,6 +30,12 @@ module ActsAsNpsRateable
       detractors = relevant_ratings.detractors.size
 
       ((promoters - detractors) * 100.0 / total_ratings).round
+    end
+
+    private
+
+    def remove_blank_comments
+      write_attribute(:comments, nil) if comments.blank?
     end
   end
 end
