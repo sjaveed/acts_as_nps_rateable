@@ -1,6 +1,10 @@
-# ActsAsNpsRateable
+# acts_as_nps_rateable
 
-TODO: Write a gem description
+acts_as_nps_rateable provides Net Promoter Score (NPS) ratings and analysis for your ActiveRecord-based models.  Net
+Promoter Score is a measurement of customer satisfaction; it is the ratio of the percentage of customers who would
+recommend your product/service to the percentage of customers who would not recommend it.
+
+NPS is documented in more detail at Wikipedia: http://en.wikipedia.org/wiki/Net_Promoter
 
 ## Installation
 
@@ -18,7 +22,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add the following line to the model you wish to store NPS ratings for:
+
+    acts_as_nps_rateable
+
+e.g.
+
+    class Post < ActiveRecord::Base
+      acts_as_nps_rateable
+    end
 
 ## Contributing
 
