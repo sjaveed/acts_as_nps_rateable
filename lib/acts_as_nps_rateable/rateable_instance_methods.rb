@@ -1,11 +1,13 @@
 # These are all the instance methods that acts_as_nps_rateable includes into an ActiveModel
 
-module ActsAsNpsRateable::InstanceMethods
+module ActsAsNpsRateable::RateableInstanceMethods
   # rate this rateable ensuring there's at most only one rating per user per rateable
-  def rate(score, user)
+  def rate(score, rater)
+    return unless rater.present?
+
     ActiveRecord::Base.transaction do
-      nps_ratings.where(user_id: user.id).delete_all if user.present?
-      nps_ratings.create(score: score.to_i, user_id: user.id)
+      nps_ratings.where(rater: rater).delete_all if rater.present?
+      nps_ratings.create(score: score.to_i, rater: rater)
     end
   end
 
@@ -15,10 +17,10 @@ module ActsAsNpsRateable::InstanceMethods
   end
 
   # a check to see if the specified user has already rated this rateable
-  def rated_by?(user)
-    return unless user.present?
+  def rated_by?(rater)
+    return unless rater.present?
 
-    nps_ratings.where(user_id: user.id).size > 0
+    nps_ratings.where(rater: rater).any?
   end
 
   #
@@ -51,7 +53,7 @@ module ActsAsNpsRateable::InstanceMethods
 
   def net_promoter_score ratings = nil
     total_ratings = ratings.nil? ? nps_ratings.size : ratings.size
-    return 0 if total_ratings == 0
+    return 0 if total_ratings.zero?
 
     if ratings.nil?
       (promoters - detractors) * 100 / total_ratings
