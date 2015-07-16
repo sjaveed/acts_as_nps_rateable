@@ -20,4 +20,10 @@ module ActsAsNpsRateable::RaterInstanceMethods
 
     nps_ratings.where(nps_rateable: rateable).any?
   end
+
+  def rating_for(rateable)
+    return unless rateable.present?
+
+    nps_ratings.where(nps_rateable: rateable).first
+  end
 end

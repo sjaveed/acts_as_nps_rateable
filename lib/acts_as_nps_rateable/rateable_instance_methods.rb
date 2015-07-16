@@ -23,6 +23,13 @@ module ActsAsNpsRateable::RateableInstanceMethods
     nps_ratings.where(rater: rater).any?
   end
 
+  # the rating given to this rateable by a specific user
+  def rating_by(rater)
+    return unless rater.present?
+
+    nps_ratings.where(rater: rater).first
+  end
+
   #
   # Net Promoter Score Calculations: http://www.checkmarket.com/2011/06/net-promoter-score/
   #
