@@ -12,6 +12,10 @@ Add this line to your application's Gemfile:
 
     gem 'acts_as_nps_rateable'
 
+If you're adding this gem to a rails 3 application, you should change the line to be:
+
+    gem 'acts_as_nps_rateable', '=0.0.4'
+
 And then execute:
 
     $ bundle
@@ -27,6 +31,14 @@ and run all pending migrations:
     rake db:migrate
 
 Now you're ready to use acts_as_nps_rateable.
+
+## Upgrading
+
+If you're upgrading from a previous version of acts_as_nps_rateable, the major change here is that v0.0.5 is now only
+compatible with rails 4.2.  Making it rails 3 compatible shouldn't be a problem but I've moved on and don't have any
+rails 3 applications to add it to.
+
+I welcome a pull request that adds back rails 3 compatiblity.
 
 ## Usage
 
