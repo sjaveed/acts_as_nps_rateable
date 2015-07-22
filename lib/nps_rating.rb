@@ -1,4 +1,13 @@
+##
+# acts_as_nps_rateable is a library that provides the following functionality:
+# * Net Promoter Score recording and analysis functionality.
+# * Storing comments in addition to a rating
+# * One response per comment from the entity being reviewed
+# * Upvoting or downvoting comments (as many times as someone wants)
 module ActsAsNpsRateable
+  ##
+  # This is the actual model that stores a rating, a review (if any), its response (if any) and a count of upvotes and
+  # downvotes
   class NpsRating < ActiveRecord::Base
     self.table_name = 'nps_ratings'
 
@@ -19,6 +28,17 @@ module ActsAsNpsRateable
 
     scope :with_comments, lambda { where.not(comments: nil) }
 
+    ##
+    # Returns the Net Promoter Score for the given collection of ratings.
+    #
+    # @param [ActiveRecord::Relation<NpsRating>] relevant_ratings
+    #   This is essentially the result of an ActiveRecord query for nps_ratings
+    #
+    # @example
+    #   NpsRating.calculate_for(fancy_product.nps_ratings)
+    #
+    # @return [Float] The calculated Net Promoter Score.
+    #   This is 0 if <code>relevant_ratings.size</code> is 0
     def self.calculate_for relevant_ratings
       total_ratings = relevant_ratings.size
       return 0 if total_ratings.zero?
@@ -29,10 +49,16 @@ module ActsAsNpsRateable
       ((promoters - detractors) * 100.0 / total_ratings).round
     end
 
+    ##
+    # @!attribute [w] comments
+    #   Ensures that any comments that are recorded are non-blank
     def comments= comments
       write_attribute(:comments, comments.present? ? comments : nil)
     end
 
+    ##
+    # @!attribute [w] response
+    #   Ensures that when a non-blank response is recorded, the responded_at time is also updated to the current time
     def response= response
       if response.present?
         write_attribute(:response, response)
@@ -40,10 +66,14 @@ module ActsAsNpsRateable
       end
     end
 
+    ##
+    # Upvotes a rating atomically.  Duplicate votes are possible.
     def upvote!
       ActsAsNpsRateable::NpsRating.update_counters(id, up_votes: 1, net_votes: 1)
     end
 
+    ##
+    # Downvotes a rating atomically.  Duplicate votes are possible.
     def downvote!
       ActsAsNpsRateable::NpsRating.update_counters(id, down_votes: 1, net_votes: -1)
     end

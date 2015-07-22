@@ -1,3 +1,4 @@
+# @private
 class ActsAsNpsRateableMigrationUsefulnessUpgrade < ActiveRecord::Migration
   def change
     add_column :nps_ratings, :up_votes, :integer, default: 0, null: false

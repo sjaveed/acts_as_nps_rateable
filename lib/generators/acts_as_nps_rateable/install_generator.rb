@@ -1,6 +1,7 @@
 require 'rails/generators/migration'
 
 module ActsAsNpsRateable
+  # @private
   class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
