@@ -12,8 +12,8 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Net Promoter Score ratings and analysis for ActiveRecord models}
   gem.homepage      = 'https://github.com/sjaveed/acts_as_nps_rateable'
 
-  gem.add_dependency 'activerecord', '~> 3.0'
-  gem.add_dependency 'rails', '~> 3.0'
+  gem.add_dependency 'activerecord', '>= 4.2.0'
+  gem.add_dependency 'rails', '>= 4.2.0'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

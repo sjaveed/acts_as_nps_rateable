@@ -1,6 +1,7 @@
 require 'rails/generators/migration'
 
 module ActsAsNpsRateable
+  # @private
   class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
@@ -10,13 +11,27 @@ module ActsAsNpsRateable
       Time.now.utc.strftime("%Y%m%d%H%M%S")
     end
 
-    def create_migration
-      migration_template '01-migration.rb', 'db/migrate/acts_as_nps_rateable_migration'
-      migration_template '02-migration.rb', 'db/migrate/acts_as_nps_rateable_migration_upgrade_0_0_2'
+    def create_nps_rateable_migrations
+      migration_mapping = {
+          '01-migration' => 'acts_as_nps_rateable_migration',
+          '02-migration' => 'acts_as_nps_rateable_migration_upgrade_0_0_2',
+          '03-migration' => 'acts_as_nps_rateable_migration_upgrade_0_0_5',
+          '04-migration' => 'acts_as_nps_rateable_migration_usefulness_upgrade'
+      }
+
+      migration_mapping.keys.sort.each do |src|
+        tgt = migration_mapping[src]
+
+        if self.class.migration_exists? 'db/migrate', tgt
+          puts "Not over-writing existing migration: #{tgt}"
+        else
+          migration_template "#{src}.rb", "db/migrate/#{tgt}.rb"
+          sleep 1
+        end
+      end
     end
 
     def install_models
-      #template 'nps_rating.rb', 'app/models/nps_rating.rb'
     end
   end
 end
