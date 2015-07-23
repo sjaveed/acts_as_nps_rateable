@@ -137,7 +137,7 @@ module ActsAsNpsRateable::Rateable
   def review(comment, rater)
     return unless rater.present?
 
-    ratings_by(rater).update_all(comment: comment)
+    ratings_by(rater).update_all(comments: comment)
   end
 
   private
